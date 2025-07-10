@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace Aindot\ExtraRules\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class ExtraRulesCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'extra-rules';
 
     public $description = 'My command';
 
