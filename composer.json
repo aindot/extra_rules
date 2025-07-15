@@ -1,6 +1,6 @@
 {
     "name": "aindot/extra-rules",
-    "description": "A package that include extra rules for Laravel, Kuwait Civil ID validation, ISBN, EAN, and so",
+    "description": "A package that include extra rules for Laravel, Kuwait Civil ID validation, ISBN10, ISBN13 and more in development.",
     "keywords": [
         "aindot",
         "laravel",
