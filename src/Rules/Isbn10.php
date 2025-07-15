@@ -40,13 +40,9 @@ class Isbn10 implements ValidationRule
 
         foreach (str_split($id) as $index => $digit) {
 
-            if (is_numeric($digit)) {
-                $sum += (10 - $index) * $digit;
-            }
+            if (is_numeric($digit)) $sum += (10 - $index) * $digit;
 
-            if (strtolower($digit) === 'x') {
-                $sum += 10;
-            }
+            if (strtolower($digit) === 'x') $sum += 10;
         }
 
         $digit = (11 - ($sum % 11)) % $this->mod;
