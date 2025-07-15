@@ -1,12 +1,12 @@
 {
-    "name": "abdullah/extra-rules",
+    "name": "aindot/extra-rules",
     "description": "A package that include extra rules for Laravel, Kuwait Civil ID validation, ISBN, EAN, and so",
     "keywords": [
         "aindot",
         "laravel",
         "extra-rules"
     ],
-    "homepage": "https://github.com/abdullah/extra-rules",
+    "homepage": "https://github.com/aindot/extra-rules",
     "license": "MIT",
     "authors": [
         {
