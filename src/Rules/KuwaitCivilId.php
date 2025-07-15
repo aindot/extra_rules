@@ -17,8 +17,6 @@ class KuwaitCivilId implements ValidationRule
 
     public function validate(string $attribute, $value, Closure $fail): void
     {
-        $value = str_replace('-', '', (string) $value);
-
         $state = is_numeric($value)
             && $this->hasValidLength($value)
             && $this->checkChecksum($value);
