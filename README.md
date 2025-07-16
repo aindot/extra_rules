@@ -1,6 +1,6 @@
 # A package that include extra rules for Laravel, Kuwait Civil ID validation, ISBN10, ISBN13 and more in development.
 
-I focus on calculated methods, IMEI and Simcard validations are on the way.
+I focus on calculated methods, ISSN, ISMN, IMEI, Simcard validations are on the way.
 
 ## Installation
 
