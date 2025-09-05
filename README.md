@@ -4,7 +4,8 @@ A package that include extra validation rules for Laravel, the following are the
 - [x] ISBN10.
 - [x] ISBN13.
 - [ ] IMEI.
-- [ ] ICCID.
+- [ ] IMSI - A unique identifier for a mobile network subscriber.
+- [ ] ICCID - A unique serial number identifying a sim card.
 
 ## Installation
 
