@@ -1,10 +1,10 @@
 # What It Dose
-A package that include extra rules for Laravel, the following are the validation rules that are in development or have been developed.
-[X] Kuwaiti Civil ID Validation.
-[X] ISBN10 Validation.
-[X] ISBN13 Validation.
-[] IMEI Validation.
-[] ICCID.
+A package that include extra validation rules for Laravel, the following are the validation rules that are in development or have been developed.
+- [x] Kuwaiti Civil ID.
+- [x] ISBN10.
+- [x] ISBN13.
+- [] IMEI.
+- [] ICCID.
 
 ## Installation
 
