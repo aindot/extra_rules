@@ -3,8 +3,8 @@ A package that include extra validation rules for Laravel, the following are the
 - [x] Kuwaiti Civil ID.
 - [x] ISBN10.
 - [x] ISBN13.
-- [] IMEI.
-- [] ICCID.
+- [ ] IMEI.
+- [ ] ICCID.
 
 ## Installation
 
