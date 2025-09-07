@@ -1,9 +1,26 @@
-# What It Dose
-A package that include extra validation rules for Laravel, the following are the validation rules that are in development or have been developed.
+# What it dose
+A package that include extra validation rules for Laravel, this package approach focuses on actual usage, for example the ISBN test must validate against different real-world examples.
+
+The following are the validation rules that are in development or have been developed.
 - [x] Kuwaiti Civil ID.
 - [x] ISBN10.
 - [x] ISBN13.
-- [ ] IMEI.
+- [ ] ISNI.
+- [ ] ISWC.
+- [ ] ISTC.
+- [ ] ISAN.
+- [ ] ISMN.
+- [ ] ISRC.
+- [ ] URN.
+- [ ] NBN.
+- [ ] DOI.
+- [ ] ISSN.
+- [ ] ISMN.
+- [ ] EAN8.
+- [x] EAN13.
+- [ ] GTIN13.
+- [x] IMEI.
+- [ ] IMEISV.
 - [ ] IMSI - A unique identifier for a mobile network subscriber.
 - [ ] ICCID - A unique serial number identifying a sim card.
 
