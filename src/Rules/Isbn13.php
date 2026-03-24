@@ -45,14 +45,14 @@ class Isbn13 implements ValidationRule
         $sum = 0;
 
         for ($x = 0; $x < $this->length - 1; $x++) {
-
             $sum += substr($id, $x, 1) * $this->weight[$x];
-
         }
 
         $digit = ($this->mod - ($sum % $this->mod) % $this->mod);
 
-        if ($digit > 9) $digit = $digit % 10;
+        if ($digit > 9) {
+            $digit = $digit % 10;
+        }
 
         return substr($id, -1) == $digit ? true : false;
     }

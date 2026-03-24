@@ -20,8 +20,8 @@ class Isbn10 implements ValidationRule
         $value = str_replace('-', '', (string) $value);
         $value = str_replace(' ', '', (string) $value);
 
-        $state =
-        $this->hasValidLength($value)
+        $state
+        = $this->hasValidLength($value)
             && $this->checkChecksum($value);
 
         if (! $state) {
@@ -39,10 +39,13 @@ class Isbn10 implements ValidationRule
         $sum = 0;
 
         foreach (str_split($id) as $index => $digit) {
+            if (is_numeric($digit)) {
+                $sum += (10 - $index) * $digit;
+            }
 
-            if (is_numeric($digit)) $sum += (10 - $index) * $digit;
-
-            if (strtolower($digit) === 'x') $sum += 10;
+            if (strtolower($digit) === 'x') {
+                $sum += 10;
+            }
         }
 
         $digit = (11 - ($sum % 11)) % $this->mod;
