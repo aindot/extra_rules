@@ -18,6 +18,7 @@ yarn-error.log
 _ide_helper.php
 _ide_helper_models.php
 .phpstorm.meta.php
+.php-cs-fixer*
 
 # Editors
 /.idea
@@ -25,7 +26,8 @@ _ide_helper_models.php
 /.vscode
 
 # Misc
-phpunit.xml
+phpunit.xml*
+.env*
 phpstan.neon
 testbench.yaml
 /docs
