@@ -12,4 +12,9 @@ return [
             'rule_class' => 'فئة القاعدة',
         ],
     ],
+    'generate' => [
+        'description' => 'إنشاء قيم عينات صالحة لقاعدة تحقق',
+        'generated' => 'تم إنشاء :count قيمة/قيم لـ [:rule]:',
+    ],
 ];
+

@@ -102,6 +102,21 @@ php artisan extra-rules:magic "4111111111111111"
 php artisan extra-rules:magic "4111111111111111" --rules=credit_card,imei
 ```
 
+### Generate samples
+
+```php
+    use Aindot\ExtraRules\ExtraRules;
+    use Aindot\ExtraRules\RuleType;
+
+    $imei = (new ExtraRules)->generate('imei');
+    $ibans = (new ExtraRules)->generateMany(RuleType::Iban, 5);
+```
+
+```bash
+php artisan extra-rules:generate imei
+php artisan extra-rules:generate iban --count=5
+```
+
 ## Credits
 
 - [Abdullah](https://github.com/aindot)

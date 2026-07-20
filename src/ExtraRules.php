@@ -7,6 +7,10 @@ use InvalidArgumentException;
 
 class ExtraRules
 {
+    public function __construct(
+        private readonly Generator $generator = new Generator,
+    ) {}
+
     /**
      * Guesses which validation categories an input belongs to.
      * Pass rule names/enums to limit candidates; empty array checks all rules.
@@ -26,6 +30,24 @@ class ExtraRules
         }
 
         return $matches;
+    }
+
+    /**
+     * Generates a valid sample value for the given rule type.
+     */
+    public function generate(string|RuleType $rule): string
+    {
+        return $this->generator->make($rule);
+    }
+
+    /**
+     * Generates multiple valid sample values for the given rule type.
+     *
+     * @return list<string>
+     */
+    public function generateMany(string|RuleType $rule, int $count = 1): array
+    {
+        return $this->generator->makeMany($rule, $count);
     }
 
     /**
