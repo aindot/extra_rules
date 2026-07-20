@@ -83,6 +83,11 @@ composer require aindot/extra-rules
     // only test the provided candidates
 ```
 
+```bash
+php artisan extra-rules:magic "4111111111111111"
+php artisan extra-rules:magic "4111111111111111" --rules=credit_card,imei
+```
+
 ## Credits
 
 - [Abdullah](https://github.com/aindot)
