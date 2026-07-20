@@ -43,6 +43,12 @@ The following are the validation rules that are in development or have been deve
 - [x] JWT - JSON Web Token header.payload.signature structure.
 - [x] Hex color - CSS hexadecimal color value.
 - [x] Slug - URL-friendly lowercase hyphenated string.
+- [x] Emirates ID - Official 15-digit UAE identity number.
+- [x] Iqama - Saudi 10-digit national ID or resident Iqama number.
+- [x] Egyptian NID - Egyptian 14-digit national identity number.
+- [x] UPC-E - Compressed UPC barcode for small retail packages.
+- [x] GTIN8 - 8-digit global trade item number for small products.
+- [x] ITF-14 - 14-digit carton barcode using GTIN-14 structure.
 
 ## Installation
 
