@@ -2,6 +2,7 @@
 
 namespace Aindot\ExtraRules\Rules;
 
+use Aindot\ExtraRules\Concerns\RejectsInvalidValue;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
@@ -11,6 +12,8 @@ use Illuminate\Contracts\Validation\ValidationRule;
  */
 class Jwt implements ValidationRule
 {
+    use RejectsInvalidValue;
+
     /**
      * Runs JWT structural validation for three base64url segments.
      */
@@ -24,7 +27,7 @@ class Jwt implements ValidationRule
         );
 
         if (! $state) {
-            $fail('the :attribute is invalid');
+            $this->reject($fail, 'extra-rules::validation.jwt');
         }
     }
 }

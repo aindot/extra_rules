@@ -2,6 +2,7 @@
 
 namespace Aindot\ExtraRules\Rules;
 
+use Aindot\ExtraRules\Concerns\RejectsInvalidValue;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
@@ -11,6 +12,8 @@ use Illuminate\Contracts\Validation\ValidationRule;
  */
 class Slug implements ValidationRule
 {
+    use RejectsInvalidValue;
+
     /**
      * Runs slug validation for lowercase alphanumeric hyphenated form.
      */
@@ -19,7 +22,7 @@ class Slug implements ValidationRule
         $state = (bool) preg_match('/^[a-z0-9]+(?:-[a-z0-9]+)*$/', (string) $value);
 
         if (! $state) {
-            $fail('the :attribute is invalid');
+            $this->reject($fail, 'extra-rules::validation.slug');
         }
     }
 }

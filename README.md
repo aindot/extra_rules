@@ -58,6 +58,20 @@ You can install the package via composer:
 composer require aindot/extra-rules
 ```
 
+### Translations
+
+English and Arabic validation messages are included. Publish them if you want to customize the wording:
+
+```bash
+php artisan vendor:publish --tag=extra-rules-translations
+```
+
+Set the app locale to use Arabic messages:
+
+```php
+app()->setLocale('ar');
+```
+
 ## Usage
 
 ```php

@@ -2,6 +2,7 @@
 
 namespace Aindot\ExtraRules\Rules;
 
+use Aindot\ExtraRules\Concerns\RejectsInvalidValue;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
@@ -11,6 +12,8 @@ use Illuminate\Contracts\Validation\ValidationRule;
  */
 class Iban implements ValidationRule
 {
+    use RejectsInvalidValue;
+
     /**
      * Runs IBAN validation on format and ISO 13616 mod-97 checksum.
      */
@@ -21,7 +24,7 @@ class Iban implements ValidationRule
         $state = $this->hasValidFormat($value) && $this->checkChecksum($value);
 
         if (! $state) {
-            $fail('the :attribute is invalid');
+            $this->reject($fail, 'extra-rules::validation.iban');
         }
     }
 

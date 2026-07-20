@@ -2,6 +2,7 @@
 
 namespace Aindot\ExtraRules\Rules;
 
+use Aindot\ExtraRules\Concerns\RejectsInvalidValue;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
@@ -11,6 +12,8 @@ use Illuminate\Contracts\Validation\ValidationRule;
  */
 class Cpf implements ValidationRule
 {
+    use RejectsInvalidValue;
+
     /**
      * Runs CPF validation on length and both check digits.
      */
@@ -23,7 +26,7 @@ class Cpf implements ValidationRule
             && $this->checkDigits($value);
 
         if (! $state) {
-            $fail('the :attribute is invalid');
+            $this->reject($fail, 'extra-rules::validation.cpf');
         }
     }
 

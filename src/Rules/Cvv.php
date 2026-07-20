@@ -2,6 +2,7 @@
 
 namespace Aindot\ExtraRules\Rules;
 
+use Aindot\ExtraRules\Concerns\RejectsInvalidValue;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
@@ -11,6 +12,8 @@ use Illuminate\Contracts\Validation\ValidationRule;
  */
 class Cvv implements ValidationRule
 {
+    use RejectsInvalidValue;
+
     /**
      * Runs CVV validation requiring 3 or 4 digits only.
      */
@@ -19,7 +22,7 @@ class Cvv implements ValidationRule
         $state = (bool) preg_match('/^\d{3,4}$/', (string) $value);
 
         if (! $state) {
-            $fail('the :attribute is invalid');
+            $this->reject($fail, 'extra-rules::validation.cvv');
         }
     }
 }

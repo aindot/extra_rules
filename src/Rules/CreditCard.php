@@ -2,6 +2,7 @@
 
 namespace Aindot\ExtraRules\Rules;
 
+use Aindot\ExtraRules\Concerns\RejectsInvalidValue;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
@@ -11,6 +12,8 @@ use Illuminate\Contracts\Validation\ValidationRule;
  */
 class CreditCard implements ValidationRule
 {
+    use RejectsInvalidValue;
+
     /**
      * Runs card number validation on length and Luhn check digit.
      */
@@ -24,7 +27,7 @@ class CreditCard implements ValidationRule
             && $this->luhn($value);
 
         if (! $state) {
-            $fail('the :attribute is invalid');
+            $this->reject($fail, 'extra-rules::validation.credit_card');
         }
     }
 

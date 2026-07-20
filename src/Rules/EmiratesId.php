@@ -2,6 +2,7 @@
 
 namespace Aindot\ExtraRules\Rules;
 
+use Aindot\ExtraRules\Concerns\RejectsInvalidValue;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
@@ -11,6 +12,8 @@ use Illuminate\Contracts\Validation\ValidationRule;
  */
 class EmiratesId implements ValidationRule
 {
+    use RejectsInvalidValue;
+
     /**
      * Runs Emirates ID validation on 784 prefix, length, and Luhn check.
      */
@@ -23,7 +26,7 @@ class EmiratesId implements ValidationRule
             && $this->luhn($value);
 
         if (! $state) {
-            $fail('the :attribute is invalid');
+            $this->reject($fail, 'extra-rules::validation.emirates_id');
         }
     }
 

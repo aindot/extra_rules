@@ -17,6 +17,7 @@ class ExtraRulesServiceProvider extends PackageServiceProvider
          */
         $package
             ->name('extra-rules')
-            ->hasCommand(ExtraRulesCommand::class);
+            ->hasCommand(ExtraRulesCommand::class)
+            ->hasTranslations();
     }
 }
