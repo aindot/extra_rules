@@ -6,8 +6,8 @@ use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
 /**
- * Validates an ISWC (International Standard Musical Work Code).
- * Used to uniquely identify musical works (compositions), not recordings.
+ * Validates an ISWC (International Standard Work Code for compositions).
+ * Used to uniquely identify compositions, not recordings.
  */
 class Iswc implements ValidationRule
 {
