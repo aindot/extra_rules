@@ -12,4 +12,9 @@ return [
             'rule_class' => 'Rule class',
         ],
     ],
+    'generate' => [
+        'description' => 'Generate valid sample values for a validation rule',
+        'generated' => 'Generated :count value(s) for [:rule]:',
+    ],
 ];
+
