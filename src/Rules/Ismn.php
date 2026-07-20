@@ -6,10 +6,10 @@ use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
 /**
- * Validates a 13-digit ISBN-13 book number.
- * Used to identify books and related media in modern publishing.
+ * Validates an ISMN (International Standard Music Number).
+ * Used to identify printed music publications (scores and sheet music).
  */
-class Isbn13 implements ValidationRule
+class Ismn implements ValidationRule
 {
     private int $length = 13;
 
@@ -20,17 +20,22 @@ class Isbn13 implements ValidationRule
     ];
 
     /**
-     * Runs ISBN-13 validation on length, 978/979 prefix, and check digit.
+     * Runs ISMN validation, converting legacy M-prefixed values to ISMN-13.
      */
     public function validate(string $attribute, $value, Closure $fail): void
     {
         $value = str_replace('-', '', (string) $value);
-        $value = str_replace(' ', '', (string) $value);
+        $value = str_replace(' ', '', $value);
+        $value = strtoupper($value);
+
+        if (str_starts_with($value, 'M')) {
+            $value = '9790'.substr($value, 1);
+        }
 
         $state = is_numeric($value)
             && $this->hasValidLength($value)
-            && $this->checkChecksum($value)
-            && $this->correctPrefix($value);
+            && $this->correctPrefix($value)
+            && $this->checkChecksum($value);
 
         if (! $state) {
             $fail('the :attribute is invalid');
@@ -38,7 +43,7 @@ class Isbn13 implements ValidationRule
     }
 
     /**
-     * Checks that the value has exactly 13 digits.
+     * Checks that the value has exactly 13 digits after normalization.
      */
     private function hasValidLength(string $id): bool
     {
@@ -46,15 +51,15 @@ class Isbn13 implements ValidationRule
     }
 
     /**
-     * Checks that the ISBN starts with the bookland prefix 978 or 979.
+     * Checks that the ISMN starts with the music prefix 9790.
      */
     private function correctPrefix(string $id): bool
     {
-        return str_starts_with($id, '978') || str_starts_with($id, '979');
+        return str_starts_with($id, '9790');
     }
 
     /**
-     * Verifies the ISBN-13 check digit using EAN-13 weights.
+     * Verifies the ISMN check digit using EAN-13 weights.
      */
     private function checkChecksum(string $id): bool
     {
@@ -64,12 +69,8 @@ class Isbn13 implements ValidationRule
             $sum += substr($id, $x, 1) * $this->weight[$x];
         }
 
-        $digit = ($this->mod - ($sum % $this->mod) % $this->mod);
+        $digit = ($this->mod - ($sum % $this->mod)) % $this->mod;
 
-        if ($digit > 9) {
-            $digit = $digit % 10;
-        }
-
-        return substr($id, -1) == $digit ? true : false;
+        return substr($id, -1) == $digit;
     }
 }

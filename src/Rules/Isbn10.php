@@ -5,6 +5,10 @@ namespace Aindot\ExtraRules\Rules;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
+/**
+ * Validates a 10-character ISBN-10 book number.
+ * Used for older book identifiers issued before ISBN-13.
+ */
 class Isbn10 implements ValidationRule
 {
     private int $length = 10;
@@ -15,6 +19,9 @@ class Isbn10 implements ValidationRule
         10, 9, 8, 7, 6, 5, 4, 3, 2,
     ];
 
+    /**
+     * Runs ISBN-10 validation on length and check character.
+     */
     public function validate(string $attribute, $value, Closure $fail): void
     {
         $value = str_replace('-', '', (string) $value);
@@ -29,11 +36,17 @@ class Isbn10 implements ValidationRule
         }
     }
 
+    /**
+     * Checks that the value has exactly 10 characters.
+     */
     private function hasValidLength(string $id): bool
     {
         return $this->length === strlen($id);
     }
 
+    /**
+     * Verifies the ISBN-10 check digit (0-9 or X) with mod 11.
+     */
     private function checkChecksum(string $id): bool
     {
         $sum = 0;

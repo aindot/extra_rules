@@ -6,24 +6,27 @@ use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
 /**
- * Validates a 12-digit Kuwait Civil ID number.
- * Used as the official personal identification number for residents of Kuwait.
+ * Validates an 8-digit EAN-8 barcode.
+ * Used on small retail products where a full EAN-13 does not fit.
  */
-class KuwaitCivilId implements ValidationRule
+class Ean8 implements ValidationRule
 {
-    private int $length = 12;
+    private int $length = 8;
 
-    private int $mod = 11;
+    private int $mod = 10;
 
     private array $weight = [
-        2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2,
+        3, 1, 3, 1, 3, 1, 3,
     ];
 
     /**
-     * Runs Kuwait Civil ID validation on length and check digit.
+     * Runs EAN-8 validation on length and check digit.
      */
     public function validate(string $attribute, $value, Closure $fail): void
     {
+        $value = str_replace('-', '', (string) $value);
+        $value = str_replace(' ', '', $value);
+
         $state = is_numeric($value)
             && $this->hasValidLength($value)
             && $this->checkChecksum($value);
@@ -34,7 +37,7 @@ class KuwaitCivilId implements ValidationRule
     }
 
     /**
-     * Checks that the value has exactly 12 digits.
+     * Checks that the value has exactly 8 digits.
      */
     private function hasValidLength(string $id): bool
     {
@@ -42,15 +45,18 @@ class KuwaitCivilId implements ValidationRule
     }
 
     /**
-     * Verifies the Civil ID check digit with the official weight table.
+     * Verifies the EAN-8 check digit using weighted positions.
      */
     private function checkChecksum(string $id): bool
     {
         $sum = 0;
+
         for ($x = 0; $x < $this->length - 1; $x++) {
             $sum += substr($id, $x, 1) * $this->weight[$x];
         }
 
-        return substr($id, -1) == ($this->mod - ($sum % $this->mod)) ? true : false;
+        $digit = ($this->mod - ($sum % $this->mod)) % $this->mod;
+
+        return substr($id, -1) == $digit;
     }
 }
