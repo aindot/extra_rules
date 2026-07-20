@@ -7,7 +7,7 @@ use Illuminate\Contracts\Validation\ValidationRule;
 
 /**
  * Validates an ISRC (International Standard Recording Code).
- * Used to uniquely identify sound recordings and music videos.
+ * Used to uniquely identify sound recordings and sound videos.
  */
 class Isrc implements ValidationRule
 {

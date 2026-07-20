@@ -6,8 +6,8 @@ use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
 /**
- * Validates an ISMN (International Standard Music Number).
- * Used to identify printed music publications (scores and sheet music).
+ * Validates an ISMN (International Standard Number for printed compositions).
+ * Used to identify printed composition publications (scores and sheets).
  */
 class Ismn implements ValidationRule
 {
@@ -51,7 +51,7 @@ class Ismn implements ValidationRule
     }
 
     /**
-     * Checks that the ISMN starts with the music prefix 9790.
+     * Checks that the ISMN starts with the composition prefix 9790.
      */
     private function correctPrefix(string $id): bool
     {
