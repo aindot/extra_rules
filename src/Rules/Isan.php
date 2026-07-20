@@ -5,10 +5,17 @@ namespace Aindot\ExtraRules\Rules;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
+/**
+ * Validates an ISAN (International Standard Audiovisual Number).
+ * Used to uniquely identify films, TV programmes, and other audiovisual works.
+ */
 class Isan implements ValidationRule
 {
     private const ALPHABET = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
+    /**
+     * Runs ISAN validation for root-only or full root+version forms.
+     */
     public function validate(string $attribute, $value, Closure $fail): void
     {
         $value = strtoupper((string) $value);
@@ -22,6 +29,9 @@ class Isan implements ValidationRule
         }
     }
 
+    /**
+     * Validates a 16-hex root/episode ISAN with its check character.
+     */
     private function isValidRoot(string $value): bool
     {
         if (! preg_match('/^[0-9A-F]{16}[0-9A-Z]$/', $value)) {
@@ -31,6 +41,9 @@ class Isan implements ValidationRule
         return $this->mod3736(substr($value, 0, 17));
     }
 
+    /**
+     * Validates a full ISAN including version segment and both check characters.
+     */
     private function isValidFull(string $value): bool
     {
         if (! preg_match('/^[0-9A-F]{16}[0-9A-Z][0-9A-F]{8}[0-9A-Z]$/', $value)) {
@@ -46,6 +59,9 @@ class Isan implements ValidationRule
             && $this->mod3736($root.$version.$check2);
     }
 
+    /**
+     * Verifies a check character with ISO 7064 Mod 37, 36.
+     */
     private function mod3736(string $number): bool
     {
         $modulus = 36;

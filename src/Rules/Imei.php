@@ -5,10 +5,17 @@ namespace Aindot\ExtraRules\Rules;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
+/**
+ * Validates a 15-digit IMEI (International Mobile Equipment Identity).
+ * Used to uniquely identify a mobile handset or cellular device.
+ */
 class Imei implements ValidationRule
 {
     private int $length = 15;
 
+    /**
+     * Runs IMEI validation on length and Luhn check digit.
+     */
     public function validate(string $attribute, $value, Closure $fail): void
     {
         $state = is_numeric($value)
@@ -20,12 +27,17 @@ class Imei implements ValidationRule
         }
     }
 
+    /**
+     * Checks that the value has exactly 15 digits.
+     */
     private function hasValidLength(string $id): bool
     {
         return $this->length === strlen($id);
     }
 
-    // luhn digit
+    /**
+     * Verifies the IMEI using the Luhn algorithm.
+     */
     private function checkChecksum(string $value): bool
     {
         $str = '';

@@ -5,6 +5,10 @@ namespace Aindot\ExtraRules\Rules;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
+/**
+ * Validates an 8-digit EAN-8 barcode.
+ * Used on small retail products where a full EAN-13 does not fit.
+ */
 class Ean8 implements ValidationRule
 {
     private int $length = 8;
@@ -15,6 +19,9 @@ class Ean8 implements ValidationRule
         3, 1, 3, 1, 3, 1, 3,
     ];
 
+    /**
+     * Runs EAN-8 validation on length and check digit.
+     */
     public function validate(string $attribute, $value, Closure $fail): void
     {
         $value = str_replace('-', '', (string) $value);
@@ -29,11 +36,17 @@ class Ean8 implements ValidationRule
         }
     }
 
+    /**
+     * Checks that the value has exactly 8 digits.
+     */
     private function hasValidLength(string $id): bool
     {
         return $this->length === strlen($id);
     }
 
+    /**
+     * Verifies the EAN-8 check digit using weighted positions.
+     */
     private function checkChecksum(string $id): bool
     {
         $sum = 0;

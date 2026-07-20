@@ -5,8 +5,15 @@ namespace Aindot\ExtraRules\Rules;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
+/**
+ * Validates an ISRC (International Standard Recording Code).
+ * Used to uniquely identify sound recordings and music videos.
+ */
 class Isrc implements ValidationRule
 {
+    /**
+     * Runs ISRC validation against the 12-character country-registrant-year-designation format.
+     */
     public function validate(string $attribute, $value, Closure $fail): void
     {
         $value = strtoupper((string) $value);

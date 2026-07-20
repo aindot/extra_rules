@@ -5,6 +5,10 @@ namespace Aindot\ExtraRules\Rules;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
+/**
+ * Validates a 12-digit Kuwait Civil ID number.
+ * Used as the official personal identification number for residents of Kuwait.
+ */
 class KuwaitCivilId implements ValidationRule
 {
     private int $length = 12;
@@ -15,6 +19,9 @@ class KuwaitCivilId implements ValidationRule
         2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2,
     ];
 
+    /**
+     * Runs Kuwait Civil ID validation on length and check digit.
+     */
     public function validate(string $attribute, $value, Closure $fail): void
     {
         $state = is_numeric($value)
@@ -26,11 +33,17 @@ class KuwaitCivilId implements ValidationRule
         }
     }
 
+    /**
+     * Checks that the value has exactly 12 digits.
+     */
     private function hasValidLength(string $id): bool
     {
         return $this->length === strlen($id);
     }
 
+    /**
+     * Verifies the Civil ID check digit with the official weight table.
+     */
     private function checkChecksum(string $id): bool
     {
         $sum = 0;
