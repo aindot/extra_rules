@@ -6,11 +6,11 @@ The following are the validation rules that are in development or have been deve
 - [x] ISBN10 - Legacy 10-character identifier for books.
 - [x] ISBN13 - Modern 13-digit identifier for books and related media.
 - [x] ISNI - Unique identifier for authors, artists, and other contributors.
-- [x] ISWC - Unique identifier for musical works (compositions).
+- [x] ISWC - Unique identifier for compositions.
 - [x] ISTC - Unique identifier for textual works across editions and formats.
 - [x] ISAN - Unique identifier for films, TV programmes, and audiovisual works.
-- [x] ISMN - Unique identifier for printed music publications.
-- [x] ISRC - Unique identifier for sound recordings and music videos.
+- [x] ISMN - Unique identifier for printed composition publications.
+- [x] ISRC - Unique identifier for sound recordings and sound videos.
 - [x] URN - Persistent, location-independent uniform resource name.
 - [x] NBN - National bibliography number used by national libraries.
 - [x] DOI - Persistent identifier for digital objects such as papers and datasets.
@@ -68,6 +68,19 @@ composer require aindot/extra-rules
     $validator = Validator::make($data, [
         'KuwaitiId' => [new KuwaitCivilId],
     ]);
+```
+
+### Magic guess
+
+```php
+    use Aindot\ExtraRules\ExtraRules;
+    use Aindot\ExtraRules\RuleType;
+
+    $matches = (new ExtraRules)->magic('4111111111111111');
+    // all matching RuleType cases
+
+    $matches = (new ExtraRules)->magic('4111111111111111', ['credit_card', RuleType::Imei]);
+    // only test the provided candidates
 ```
 
 ## Credits
