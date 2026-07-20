@@ -5,24 +5,23 @@ The following are the validation rules that are in development or have been deve
 - [x] Kuwaiti Civil ID.
 - [x] ISBN10.
 - [x] ISBN13.
-- [ ] ISNI.
-- [ ] ISWC.
-- [ ] ISTC.
-- [ ] ISAN.
-- [ ] ISMN.
-- [ ] ISRC.
-- [ ] URN.
-- [ ] NBN.
-- [ ] DOI.
-- [ ] ISSN.
-- [ ] ISMN.
-- [ ] EAN8.
+- [x] ISNI.
+- [x] ISWC.
+- [x] ISTC.
+- [x] ISAN.
+- [x] ISMN.
+- [x] ISRC.
+- [x] URN.
+- [x] NBN.
+- [x] DOI.
+- [x] ISSN.
+- [x] EAN8.
 - [x] EAN13.
-- [ ] GTIN13.
+- [x] GTIN13.
 - [x] IMEI.
-- [ ] IMEISV.
-- [ ] IMSI - A unique identifier for a mobile network subscriber.
-- [ ] ICCID - A unique serial number identifying a sim card.
+- [x] IMEISV.
+- [x] IMSI - A unique identifier for a mobile network subscriber.
+- [x] ICCID - A unique serial number identifying a sim card.
 
 ## Installation
 
