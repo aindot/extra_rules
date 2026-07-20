@@ -2,6 +2,7 @@
 
 namespace Aindot\ExtraRules\Rules;
 
+use Aindot\ExtraRules\Concerns\RejectsInvalidValue;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
@@ -11,6 +12,8 @@ use Illuminate\Contracts\Validation\ValidationRule;
  */
 class Imsi implements ValidationRule
 {
+    use RejectsInvalidValue;
+
     /**
      * Runs IMSI validation on length and MCC range.
      */
@@ -23,7 +26,7 @@ class Imsi implements ValidationRule
             && $this->hasValidMcc($value);
 
         if (! $state) {
-            $fail('the :attribute is invalid');
+            $this->reject($fail, 'extra-rules::validation.imsi');
         }
     }
 

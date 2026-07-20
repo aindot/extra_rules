@@ -2,6 +2,7 @@
 
 namespace Aindot\ExtraRules\Rules;
 
+use Aindot\ExtraRules\Concerns\RejectsInvalidValue;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
@@ -11,6 +12,8 @@ use Illuminate\Contracts\Validation\ValidationRule;
  */
 class E164 implements ValidationRule
 {
+    use RejectsInvalidValue;
+
     /**
      * Runs E.164 validation for optional + and up to 15 digits.
      */
@@ -21,7 +24,7 @@ class E164 implements ValidationRule
         $state = (bool) preg_match('/^\+?[1-9]\d{1,14}$/', $value);
 
         if (! $state) {
-            $fail('the :attribute is invalid');
+            $this->reject($fail, 'extra-rules::validation.e164');
         }
     }
 }

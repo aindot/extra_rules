@@ -2,6 +2,7 @@
 
 namespace Aindot\ExtraRules\Rules;
 
+use Aindot\ExtraRules\Concerns\RejectsInvalidValue;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
@@ -11,6 +12,8 @@ use Illuminate\Contracts\Validation\ValidationRule;
  */
 class Ssn implements ValidationRule
 {
+    use RejectsInvalidValue;
+
     /**
      * Runs SSN format validation and rejects known invalid area/group ranges.
      */
@@ -19,7 +22,7 @@ class Ssn implements ValidationRule
         $value = trim((string) $value);
 
         if (! preg_match('/^(\d{3})-?(\d{2})-?(\d{4})$/', $value, $m)) {
-            $fail('the :attribute is invalid');
+            $this->reject($fail, 'extra-rules::validation.ssn');
 
             return;
         }
@@ -35,7 +38,7 @@ class Ssn implements ValidationRule
             && $serial !== 0;
 
         if (! $state) {
-            $fail('the :attribute is invalid');
+            $this->reject($fail, 'extra-rules::validation.ssn');
         }
     }
 }

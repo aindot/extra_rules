@@ -2,6 +2,7 @@
 
 namespace Aindot\ExtraRules\Rules;
 
+use Aindot\ExtraRules\Concerns\RejectsInvalidValue;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
@@ -11,6 +12,8 @@ use Illuminate\Contracts\Validation\ValidationRule;
  */
 class Ismn implements ValidationRule
 {
+    use RejectsInvalidValue;
+
     private int $length = 13;
 
     private int $mod = 10;
@@ -38,7 +41,7 @@ class Ismn implements ValidationRule
             && $this->checkChecksum($value);
 
         if (! $state) {
-            $fail('the :attribute is invalid');
+            $this->reject($fail, 'extra-rules::validation.ismn');
         }
     }
 

@@ -2,6 +2,7 @@
 
 namespace Aindot\ExtraRules\Rules;
 
+use Aindot\ExtraRules\Concerns\RejectsInvalidValue;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
@@ -11,6 +12,8 @@ use Illuminate\Contracts\Validation\ValidationRule;
  */
 class Iccid implements ValidationRule
 {
+    use RejectsInvalidValue;
+
     /**
      * Runs ICCID validation on length, 89 prefix, and Luhn check digit.
      */
@@ -24,7 +27,7 @@ class Iccid implements ValidationRule
             && $this->checkChecksum($value);
 
         if (! $state) {
-            $fail('the :attribute is invalid');
+            $this->reject($fail, 'extra-rules::validation.iccid');
         }
     }
 

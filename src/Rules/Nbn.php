@@ -2,6 +2,7 @@
 
 namespace Aindot\ExtraRules\Rules;
 
+use Aindot\ExtraRules\Concerns\RejectsInvalidValue;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
@@ -11,6 +12,8 @@ use Illuminate\Contracts\Validation\ValidationRule;
  */
 class Nbn implements ValidationRule
 {
+    use RejectsInvalidValue;
+
     /**
      * Runs NBN validation for urn:nbn: form or plain national forms.
      */
@@ -21,7 +24,7 @@ class Nbn implements ValidationRule
         $state = $this->isUrnNbn($value) || $this->isPlainNbn($value);
 
         if (! $state) {
-            $fail('the :attribute is invalid');
+            $this->reject($fail, 'extra-rules::validation.nbn');
         }
     }
 

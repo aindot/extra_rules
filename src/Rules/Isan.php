@@ -2,6 +2,7 @@
 
 namespace Aindot\ExtraRules\Rules;
 
+use Aindot\ExtraRules\Concerns\RejectsInvalidValue;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
@@ -11,6 +12,8 @@ use Illuminate\Contracts\Validation\ValidationRule;
  */
 class Isan implements ValidationRule
 {
+    use RejectsInvalidValue;
+
     private const ALPHABET = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
     /**
@@ -25,7 +28,7 @@ class Isan implements ValidationRule
         $state = $this->isValidRoot($value) || $this->isValidFull($value);
 
         if (! $state) {
-            $fail('the :attribute is invalid');
+            $this->reject($fail, 'extra-rules::validation.isan');
         }
     }
 

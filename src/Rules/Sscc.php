@@ -2,6 +2,7 @@
 
 namespace Aindot\ExtraRules\Rules;
 
+use Aindot\ExtraRules\Concerns\RejectsInvalidValue;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
@@ -11,6 +12,8 @@ use Illuminate\Contracts\Validation\ValidationRule;
  */
 class Sscc implements ValidationRule
 {
+    use RejectsInvalidValue;
+
     private int $length = 18;
 
     /**
@@ -25,7 +28,7 @@ class Sscc implements ValidationRule
             && $this->checkChecksum($value);
 
         if (! $state) {
-            $fail('the :attribute is invalid');
+            $this->reject($fail, 'extra-rules::validation.sscc');
         }
     }
 

@@ -2,6 +2,7 @@
 
 namespace Aindot\ExtraRules\Rules;
 
+use Aindot\ExtraRules\Concerns\RejectsInvalidValue;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
@@ -11,6 +12,8 @@ use Illuminate\Contracts\Validation\ValidationRule;
  */
 class UpcE implements ValidationRule
 {
+    use RejectsInvalidValue;
+
     /**
      * Runs UPC-E validation after normalizing and expanding to UPC-A.
      */
@@ -19,7 +22,7 @@ class UpcE implements ValidationRule
         $value = str_replace(['-', ' '], '', (string) $value);
 
         if (! ctype_digit($value)) {
-            $fail('the :attribute is invalid');
+            $this->reject($fail, 'extra-rules::validation.upc_e');
 
             return;
         }
@@ -28,7 +31,7 @@ class UpcE implements ValidationRule
         $state = $normalized !== null && $this->isValidUpcE($normalized);
 
         if (! $state) {
-            $fail('the :attribute is invalid');
+            $this->reject($fail, 'extra-rules::validation.upc_e');
         }
     }
 

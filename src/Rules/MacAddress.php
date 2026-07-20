@@ -2,6 +2,7 @@
 
 namespace Aindot\ExtraRules\Rules;
 
+use Aindot\ExtraRules\Concerns\RejectsInvalidValue;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
@@ -11,6 +12,8 @@ use Illuminate\Contracts\Validation\ValidationRule;
  */
 class MacAddress implements ValidationRule
 {
+    use RejectsInvalidValue;
+
     /**
      * Runs MAC address validation for colon, hyphen, or bare hex forms.
      */
@@ -24,7 +27,7 @@ class MacAddress implements ValidationRule
         );
 
         if (! $state) {
-            $fail('the :attribute is invalid');
+            $this->reject($fail, 'extra-rules::validation.mac_address');
         }
     }
 }

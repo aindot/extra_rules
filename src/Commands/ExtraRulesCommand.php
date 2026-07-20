@@ -18,6 +18,8 @@ class ExtraRulesCommand extends Command
 
     public function handle(ExtraRules $extraRules): int
     {
+        $this->description = __('extra-rules::commands.magic.description');
+
         $input = (string) $this->argument('input');
         $rulesOption = $this->option('rules');
 
@@ -35,15 +37,23 @@ class ExtraRulesCommand extends Command
         }
 
         if ($matches === []) {
-            $this->warn('No matching validation categories found.');
+            $this->warn(__('extra-rules::commands.magic.no_matches'));
 
             return self::SUCCESS;
         }
 
-        $this->info('Matched '.count($matches).' categor'.(count($matches) === 1 ? 'y' : 'ies').':');
+        $message = count($matches) === 1
+            ? __('extra-rules::commands.magic.matched_single')
+            : __('extra-rules::commands.magic.matched_multiple', ['count' => count($matches)]);
+
+        $this->info($message);
 
         $this->table(
-            ['Name', 'Key', 'Rule class'],
+            [
+                __('extra-rules::commands.magic.headers.name'),
+                __('extra-rules::commands.magic.headers.key'),
+                __('extra-rules::commands.magic.headers.rule_class'),
+            ],
             array_map(
                 fn (RuleType $type) => [$type->name, $type->value, class_basename($type->ruleClass())],
                 $matches

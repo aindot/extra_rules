@@ -2,6 +2,7 @@
 
 namespace Aindot\ExtraRules\Rules;
 
+use Aindot\ExtraRules\Concerns\RejectsInvalidValue;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
@@ -11,6 +12,8 @@ use Illuminate\Contracts\Validation\ValidationRule;
  */
 class Doi implements ValidationRule
 {
+    use RejectsInvalidValue;
+
     /**
      * Runs DOI validation after normalizing URL or doi: prefixes.
      */
@@ -23,7 +26,7 @@ class Doi implements ValidationRule
         $state = (bool) preg_match('#^10\.\d{4,9}/\S+$#', $value);
 
         if (! $state) {
-            $fail('the :attribute is invalid');
+            $this->reject($fail, 'extra-rules::validation.doi');
         }
     }
 }

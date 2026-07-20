@@ -2,6 +2,7 @@
 
 namespace Aindot\ExtraRules\Rules;
 
+use Aindot\ExtraRules\Concerns\RejectsInvalidValue;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
@@ -11,6 +12,8 @@ use Illuminate\Contracts\Validation\ValidationRule;
  */
 class Ulid implements ValidationRule
 {
+    use RejectsInvalidValue;
+
     /**
      * Runs ULID validation against Crockford base32 and length 26.
      */
@@ -21,7 +24,7 @@ class Ulid implements ValidationRule
         $state = (bool) preg_match('/^[0-9A-HJKMNP-TV-Z]{26}$/', $value);
 
         if (! $state) {
-            $fail('the :attribute is invalid');
+            $this->reject($fail, 'extra-rules::validation.ulid');
         }
     }
 }

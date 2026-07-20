@@ -2,6 +2,7 @@
 
 namespace Aindot\ExtraRules\Rules;
 
+use Aindot\ExtraRules\Concerns\RejectsInvalidValue;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
@@ -11,6 +12,8 @@ use Illuminate\Contracts\Validation\ValidationRule;
  */
 class PassportMrz implements ValidationRule
 {
+    use RejectsInvalidValue;
+
     /**
      * Runs TD3 MRZ line-2 validation including field and composite checks.
      */
@@ -27,7 +30,7 @@ class PassportMrz implements ValidationRule
             && $this->checkDigit(substr($value, 0, 10).substr($value, 13, 7).substr($value, 21, 22), $value[43]);
 
         if (! $state) {
-            $fail('the :attribute is invalid');
+            $this->reject($fail, 'extra-rules::validation.passport_mrz');
         }
     }
 

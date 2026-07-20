@@ -2,6 +2,7 @@
 
 namespace Aindot\ExtraRules\Rules;
 
+use Aindot\ExtraRules\Concerns\RejectsInvalidValue;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
@@ -11,6 +12,8 @@ use Illuminate\Contracts\Validation\ValidationRule;
  */
 class Iswc implements ValidationRule
 {
+    use RejectsInvalidValue;
+
     /**
      * Runs ISWC validation on T-prefixed format and check digit.
      */
@@ -23,7 +26,7 @@ class Iswc implements ValidationRule
             && $this->checkChecksum($value);
 
         if (! $state) {
-            $fail('the :attribute is invalid');
+            $this->reject($fail, 'extra-rules::validation.iswc');
         }
     }
 

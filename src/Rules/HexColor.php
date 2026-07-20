@@ -2,6 +2,7 @@
 
 namespace Aindot\ExtraRules\Rules;
 
+use Aindot\ExtraRules\Concerns\RejectsInvalidValue;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
@@ -11,6 +12,8 @@ use Illuminate\Contracts\Validation\ValidationRule;
  */
 class HexColor implements ValidationRule
 {
+    use RejectsInvalidValue;
+
     /**
      * Runs hex color validation with an optional leading #.
      */
@@ -21,7 +24,7 @@ class HexColor implements ValidationRule
         $state = (bool) preg_match('/^#?([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6}|[0-9A-Fa-f]{8})$/', $value);
 
         if (! $state) {
-            $fail('the :attribute is invalid');
+            $this->reject($fail, 'extra-rules::validation.hex_color');
         }
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Aindot\ExtraRules\Rules;
 
+use Aindot\ExtraRules\Concerns\RejectsInvalidValue;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
@@ -11,6 +12,8 @@ use Illuminate\Contracts\Validation\ValidationRule;
  */
 class Esn implements ValidationRule
 {
+    use RejectsInvalidValue;
+
     /**
      * Runs ESN validation for 8-hex or 11-decimal forms.
      */
@@ -22,7 +25,7 @@ class Esn implements ValidationRule
             || (bool) preg_match('/^\d{11}$/', $value);
 
         if (! $state) {
-            $fail('the :attribute is invalid');
+            $this->reject($fail, 'extra-rules::validation.esn');
         }
     }
 }

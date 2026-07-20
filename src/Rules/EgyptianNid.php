@@ -2,6 +2,7 @@
 
 namespace Aindot\ExtraRules\Rules;
 
+use Aindot\ExtraRules\Concerns\RejectsInvalidValue;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
@@ -11,6 +12,8 @@ use Illuminate\Contracts\Validation\ValidationRule;
  */
 class EgyptianNid implements ValidationRule
 {
+    use RejectsInvalidValue;
+
     private array $governorates = [
         '01', '02', '03', '04', '11', '12', '13', '14', '15', '16', '17', '18', '19',
         '21', '22', '23', '24', '25', '26', '27', '28', '29',
@@ -31,7 +34,7 @@ class EgyptianNid implements ValidationRule
             && $this->hasValidGovernorate($value);
 
         if (! $state) {
-            $fail('the :attribute is invalid');
+            $this->reject($fail, 'extra-rules::validation.egyptian_nid');
         }
     }
 

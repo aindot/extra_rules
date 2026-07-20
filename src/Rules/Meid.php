@@ -2,6 +2,7 @@
 
 namespace Aindot\ExtraRules\Rules;
 
+use Aindot\ExtraRules\Concerns\RejectsInvalidValue;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
@@ -11,6 +12,8 @@ use Illuminate\Contracts\Validation\ValidationRule;
  */
 class Meid implements ValidationRule
 {
+    use RejectsInvalidValue;
+
     /**
      * Runs MEID validation for 14-hex or 18-decimal forms with Luhn.
      */
@@ -21,7 +24,7 @@ class Meid implements ValidationRule
         $state = $this->isValidHex($value) || $this->isValidDecimal($value);
 
         if (! $state) {
-            $fail('the :attribute is invalid');
+            $this->reject($fail, 'extra-rules::validation.meid');
         }
     }
 

@@ -2,6 +2,7 @@
 
 namespace Aindot\ExtraRules\Rules;
 
+use Aindot\ExtraRules\Concerns\RejectsInvalidValue;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
@@ -11,6 +12,8 @@ use Illuminate\Contracts\Validation\ValidationRule;
  */
 class Iqama implements ValidationRule
 {
+    use RejectsInvalidValue;
+
     /**
      * Runs Iqama validation on prefix, length, and official checksum.
      */
@@ -22,7 +25,7 @@ class Iqama implements ValidationRule
             && $this->checkChecksum($value);
 
         if (! $state) {
-            $fail('the :attribute is invalid');
+            $this->reject($fail, 'extra-rules::validation.iqama');
         }
     }
 
