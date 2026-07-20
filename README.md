@@ -22,6 +22,27 @@ The following are the validation rules that are in development or have been deve
 - [x] IMEISV - Device identity plus software version number (SVN).
 - [x] IMSI - A unique identifier for a mobile network subscriber.
 - [x] ICCID - A unique serial number identifying a sim card.
+- [x] MEID - Unique identifier for CDMA mobile devices.
+- [x] ESN - Legacy electronic serial number for older CDMA devices.
+- [x] MAC address - Unique hardware address for a network interface.
+- [x] E.164 - International telephone number including country code.
+- [x] IBAN - Cross-border bank account identifier.
+- [x] BIC/SWIFT - Bank identifier code used in financial transfers.
+- [x] Credit card - Payment card number validated with Luhn.
+- [x] CVV - 3- or 4-digit card security code.
+- [x] UPC-A - 12-digit North American retail product barcode.
+- [x] GTIN14 - 14-digit trade item number for cases and pallets.
+- [x] SSCC - Serial shipping container code for logistics units.
+- [x] VIN - 17-character vehicle identification number.
+- [x] CPF - Brazilian individual taxpayer registry number.
+- [x] CNPJ - Brazilian company taxpayer registry number.
+- [x] SSN - US Social Security Number format check.
+- [x] Passport MRZ - TD3 passport machine-readable zone line check.
+- [x] UUID - Universally unique identifier in 8-4-4-4-12 form.
+- [x] ULID - 26-character lexicographically sortable unique ID.
+- [x] JWT - JSON Web Token header.payload.signature structure.
+- [x] Hex color - CSS hexadecimal color value.
+- [x] Slug - URL-friendly lowercase hyphenated string.
 
 ## Installation
 
