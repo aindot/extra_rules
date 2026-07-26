@@ -13,6 +13,7 @@ return [
     'ean13' => 'The :attribute must be a valid EAN-13 barcode.',
     'ean8' => 'The :attribute must be a valid EAN-8 barcode.',
     'egyptian_nid' => 'The :attribute must be a valid Egyptian national ID.',
+    'email' => 'The :attribute must be a valid email address.',
     'emirates_id' => 'The :attribute must be a valid Emirates ID.',
     'esn' => 'The :attribute must be a valid ESN.',
     'gtin13' => 'The :attribute must be a valid GTIN-13.',

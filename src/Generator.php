@@ -25,6 +25,7 @@ class Generator
             RuleType::Ean13, RuleType::Gtin13, RuleType::Isbn13 => $this->ean13('978'),
             RuleType::Ean8, RuleType::Gtin8 => $this->ean8(),
             RuleType::EgyptianNid => $this->egyptianNid(),
+            RuleType::Email => $this->email(),
             RuleType::EmiratesId => $this->emiratesId(),
             RuleType::Esn => strtoupper(bin2hex(random_bytes(4))),
             RuleType::Gtin14, RuleType::Itf14 => $this->gtin(14),
@@ -531,5 +532,27 @@ class Generator
     private function passportMrz(): string
     {
         return 'L898902C36UTO7408122F1204159ZE184226B<<<<<10';
+    }
+
+    private function email(): string
+    {
+        $localParts = [
+            $this->slugPart(5),
+            $this->slugPart(3).'.'.$this->slugPart(3),
+            $this->slugPart(4).'_'.$this->slugPart(2),
+            $this->alnum(4).$this->digits(2),
+            'test.'.$this->slugPart(4),
+        ];
+
+        $tlds = [
+            'com', 'net', 'org', 'io', 'dev', 'gov', 'edu', 'co', 'uk', 'de',
+            'fr', 'jp', 'cn', 'br', 'au', 'ca', 'nl', 'se', 'no', 'fi',
+        ];
+
+        $randomLocal = $localParts[random_int(0, count($localParts) - 1)];
+        $randomTld = $tlds[random_int(0, count($tlds) - 1)];
+        $randomDomain = $this->slugPart(random_int(5, 10)).'.'.$randomTld;
+
+        return $randomLocal.'@'.$randomDomain;
     }
 }
