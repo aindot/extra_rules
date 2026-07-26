@@ -12,6 +12,7 @@ use Aindot\ExtraRules\Rules\E164;
 use Aindot\ExtraRules\Rules\Ean13;
 use Aindot\ExtraRules\Rules\Ean8;
 use Aindot\ExtraRules\Rules\EgyptianNid;
+use Aindot\ExtraRules\Rules\Email;
 use Aindot\ExtraRules\Rules\EmiratesId;
 use Aindot\ExtraRules\Rules\Esn;
 use Aindot\ExtraRules\Rules\Gtin13;
@@ -63,6 +64,7 @@ enum RuleType: string
     case Ean13 = 'ean13';
     case Ean8 = 'ean8';
     case EgyptianNid = 'egyptian_nid';
+    case Email = 'email';
     case EmiratesId = 'emirates_id';
     case Esn = 'esn';
     case Gtin13 = 'gtin13';
@@ -117,6 +119,7 @@ enum RuleType: string
             self::Ean13 => Ean13::class,
             self::Ean8 => Ean8::class,
             self::EgyptianNid => EgyptianNid::class,
+            self::Email => Email::class,
             self::EmiratesId => EmiratesId::class,
             self::Esn => Esn::class,
             self::Gtin13 => Gtin13::class,
@@ -189,6 +192,7 @@ enum RuleType: string
             'emirates' => self::EmiratesId,
             'egypt_nid' => self::EgyptianNid,
             'egyptian_id' => self::EgyptianNid,
+            'email' => self::Email,
         ];
 
         if (isset($aliases[$normalized])) {

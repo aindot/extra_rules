@@ -13,6 +13,7 @@ return [
     'ean13' => 'يجب أن يكون :attribute باركود EAN-13 صالحًا.',
     'ean8' => 'يجب أن يكون :attribute باركود EAN-8 صالحًا.',
     'egyptian_nid' => 'يجب أن يكون :attribute رقم قومي مصري صالحًا.',
+    'email' => 'يجب أن يكون :attribute عنوان بريد إلكتروني صالحًا.',
     'emirates_id' => 'يجب أن يكون :attribute رقم هوية إماراتية صالحًا.',
     'esn' => 'يجب أن يكون :attribute رقم ESN صالحًا.',
     'gtin13' => 'يجب أن يكون :attribute رقم GTIN-13 صالحًا.',

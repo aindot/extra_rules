@@ -17,6 +17,7 @@ The following are the validation rules that are in development or have been deve
 - [x] ISSN - Unique identifier for serial publications such as journals.
 - [x] EAN8 - 8-digit retail barcode for small product packaging.
 - [x] EAN13 - 13-digit retail barcode used worldwide at point of sale.
+- [x] Email - RFC 5322 compliant email address validation.
 - [x] GTIN13 - 13-digit global trade item number for products and packaging.
 - [x] IMEI - Unique identifier for a mobile handset or cellular device.
 - [x] IMEISV - Device identity plus software version number (SVN).
@@ -115,6 +116,25 @@ php artisan extra-rules:magic "4111111111111111" --rules=credit_card,imei
 ```bash
 php artisan extra-rules:generate imei
 php artisan extra-rules:generate iban --count=5
+```
+
+### Email validation and generation
+
+```php
+    use Aindot\ExtraRules\ExtraRules;
+    use Aindot\ExtraRules\RuleType;
+
+    $validator = Validator::make($data, [
+        'email' => [new \Aindot\ExtraRules\Rules\Email],
+    ]);
+
+    $email = (new ExtraRules)->generate('email');
+    $emails = (new ExtraRules)->generateMany(RuleType::Email, 5);
+```
+
+```bash
+php artisan extra-rules:generate email
+php artisan extra-rules:generate email --count=5
 ```
 
 ## Credits
