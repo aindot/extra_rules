@@ -544,21 +544,14 @@ class Generator
             'test.'.$this->slugPart(4),
         ];
 
-        $domains = [
-            'gmail.com',
-            'outlook.com',
-            'yahoo.com',
-            'hotmail.com',
-            'protonmail.com',
-            'icloud.com',
-            'aol.com',
-            'zoho.com',
-            'mail.com',
-            'gmx.com',
+        $tlds = [
+            'com', 'net', 'org', 'io', 'dev', 'gov', 'edu', 'co', 'uk', 'de',
+            'fr', 'jp', 'cn', 'br', 'au', 'ca', 'nl', 'se', 'no', 'fi',
         ];
 
-        $randomDomain = $domains[random_int(0, count($domains) - 1)];
         $randomLocal = $localParts[random_int(0, count($localParts) - 1)];
+        $randomTld = $tlds[random_int(0, count($tlds) - 1)];
+        $randomDomain = $this->slugPart(random_int(5, 10)).'.'.$randomTld;
 
         return $randomLocal.'@'.$randomDomain;
     }
