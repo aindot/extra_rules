@@ -1,7 +1,5 @@
 # What it dose
 A package that include extra validation rules for Laravel, this package approach focuses on actual usage, for example the ISBN test must validate against different real-world examples.
-
-The following are the validation rules that are in development or have been developed.
 - [x] Kuwaiti Civil ID - Official personal identification number for residents of Kuwait.
 - [x] ISBN10 - Legacy 10-character identifier for books.
 - [x] ISBN13 - Modern 13-digit identifier for books and related media.
@@ -43,6 +41,11 @@ The following are the validation rules that are in development or have been deve
 - [x] JWT - JSON Web Token header.payload.signature structure.
 - [x] Hex color - CSS hexadecimal color value.
 - [x] Slug - URL-friendly lowercase hyphenated string.
+- [x] Email - RFC 5322 compliant email with optional MX check.
+- [x] URL - HTTP/HTTPS/FTP URLs with optional path/query.
+- [x] IPv4 - Strict IPv4 address validation.
+- [x] IPv6 - IPv6 address with compressed notation support.
+- [x] Phone Number - International phone numbers (E.164, national formats).
 - [x] Emirates ID - Official 15-digit UAE identity number.
 - [x] Iqama - Saudi 10-digit national ID or resident Iqama number.
 - [x] Egyptian NID - Egyptian 14-digit national identity number.

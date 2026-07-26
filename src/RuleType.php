@@ -49,6 +49,11 @@ use Aindot\ExtraRules\Rules\UpcE;
 use Aindot\ExtraRules\Rules\Urn;
 use Aindot\ExtraRules\Rules\Uuid;
 use Aindot\ExtraRules\Rules\Vin;
+use Aindot\ExtraRules\Rules\Email;
+use Aindot\ExtraRules\Rules\Url;
+use Aindot\ExtraRules\Rules\Ipv4;
+use Aindot\ExtraRules\Rules\Ipv6;
+use Aindot\ExtraRules\Rules\PhoneNumber;
 use InvalidArgumentException;
 
 enum RuleType: string
@@ -100,6 +105,11 @@ enum RuleType: string
     case Urn = 'urn';
     case Uuid = 'uuid';
     case Vin = 'vin';
+    case Email = 'email';
+    case Url = 'url';
+    case Ipv4 = 'ipv4';
+    case Ipv6 = 'ipv6';
+    case PhoneNumber = 'phone_number';
 
     /**
      * Returns the validation rule class for this type.
@@ -154,6 +164,11 @@ enum RuleType: string
             self::Urn => Urn::class,
             self::Uuid => Uuid::class,
             self::Vin => Vin::class,
+            self::Email => Email::class,
+            self::Url => Url::class,
+            self::Ipv4 => Ipv4::class,
+            self::Ipv6 => Ipv6::class,
+            self::PhoneNumber => PhoneNumber::class,
         };
     }
 

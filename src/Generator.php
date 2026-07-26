@@ -58,6 +58,11 @@ class Generator
             RuleType::Urn => 'urn:example:'.$this->slugPart(8),
             RuleType::Uuid => $this->uuid(),
             RuleType::Vin => $this->vin(),
+            RuleType::Email => $this->email(),
+            RuleType::Url => $this->url(),
+            RuleType::Ipv4 => $this->ipv4(),
+            RuleType::Ipv6 => $this->ipv6(),
+            RuleType::PhoneNumber => $this->phoneNumber(),
         };
 
         if (! $this->passes($type, $value)) {
@@ -528,8 +533,28 @@ class Generator
         return '1HGCM82633A004352';
     }
 
-    private function passportMrz(): string
+    private function email(): string
     {
-        return 'L898902C36UTO7408122F1204159ZE184226B<<<<<10';
+        return 'test@example.com';
+    }
+
+    private function url(): string
+    {
+        return 'https://example.com';
+    }
+
+    private function ipv4(): string
+    {
+        return '192.168.1.1';
+    }
+
+    private function ipv6(): string
+    {
+        return '2001:0db8:85a3:0000:0000:8a2e:0370:7334';
+    }
+
+    private function phoneNumber(): string
+    {
+        return '+1234567890';
     }
 }

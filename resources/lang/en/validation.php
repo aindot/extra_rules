@@ -50,4 +50,9 @@ return [
     'urn' => 'The :attribute must be a valid URN.',
     'uuid' => 'The :attribute must be a valid UUID.',
     'vin' => 'The :attribute must be a valid VIN.',
+    'email' => 'The :attribute must be a valid email address.',
+    'url' => 'The :attribute must be a valid URL.',
+    'ipv4' => 'The :attribute must be a valid IPv4 address.',
+    'ipv6' => 'The :attribute must be a valid IPv6 address.',
+    'phone_number' => 'The :attribute must be a valid phone number.',
 ];

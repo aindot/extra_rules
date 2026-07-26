@@ -50,4 +50,9 @@ return [
     'urn' => 'يجب أن يكون :attribute معرّف URN صالحًا.',
     'uuid' => 'يجب أن يكون :attribute معرّف UUID صالحًا.',
     'vin' => 'يجب أن يكون :attribute رقم VIN صالحًا.',
+    'email' => 'يجب أن يكون :attribute عنوان بريد إلكتروني صالحًا.',
+    'url' => 'يجب أن يكون :attribute رابطًا صالحًا.',
+    'ipv4' => 'يجب أن يكون :attribute عنوان IPv4 صالحًا.',
+    'ipv6' => 'يجب أن يكون :attribute عنوان IPv6 صالحًا.',
+    'phone_number' => 'يجب أن يكون :attribute رقم هاتف صالحًا.',
 ];
