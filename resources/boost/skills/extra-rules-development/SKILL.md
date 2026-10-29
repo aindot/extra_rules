@@ -45,6 +45,7 @@ Use `Aindot\ExtraRules\RuleType` string values (snake_case) or enum cases. Class
 | Telecom/device | `imei`, `imeisv`, `imsi`, `iccid`, `meid`, `esn`, `mac_address`, `e164` |
 | Finance | `iban`, `bic`, `credit_card`, `cvv` |
 | Other | `email`, `uuid`, `ulid`, `jwt`, `hex_color`, `slug`, `vin` |
+| Secrets | `private_key`, `api_key`, `bearer_token` |
 
 Aliases accepted by `RuleType::fromMixed()` include: `swift`→`bic`, `phone`→`e164`, `mrz`→`passport_mrz`, `kuwait_id`→`kuwait_civil_id`, `uae_id`→`emirates_id`.
 
