@@ -4,6 +4,7 @@ namespace Aindot\ExtraRules;
 
 use Aindot\ExtraRules\Commands\ExtraRulesCommand;
 use Aindot\ExtraRules\Commands\GenerateCommand;
+use Aindot\ExtraRules\Commands\RedactCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -21,6 +22,7 @@ class ExtraRulesServiceProvider extends PackageServiceProvider
             ->hasCommands([
                 ExtraRulesCommand::class,
                 GenerateCommand::class,
+                RedactCommand::class,
             ])
             ->hasTranslations();
     }

@@ -2,14 +2,38 @@
 
 namespace Aindot\ExtraRules;
 
-use Illuminate\Contracts\Validation\ValidationRule;
+use Aindot\ExtraRules\Concerns\ValidatesRuleValue;
 use InvalidArgumentException;
 
 class ExtraRules
 {
+    use ValidatesRuleValue;
+
     public function __construct(
         private readonly Generator $generator = new Generator,
+        private readonly Redactor $redactor = new Redactor,
     ) {}
+
+    /**
+     * Redacts detected secrets in the given text.
+     *
+     * @param  array<int, string|RuleType>  $types
+     */
+    public function redact(string $text, array $types = []): string
+    {
+        return $this->redactor->redact($text, $types);
+    }
+
+    /**
+     * Detects secrets in the given text without exposing their values.
+     *
+     * @param  array<int, string|RuleType>  $types
+     * @return list<array{type: RuleType, offset: int, length: int}>
+     */
+    public function detect(string $text, array $types = []): array
+    {
+        return $this->redactor->detect($text, $types);
+    }
 
     /**
      * Guesses which validation categories an input belongs to.
@@ -24,7 +48,7 @@ class ExtraRules
         $matches = [];
 
         foreach ($candidates as $type) {
-            if ($this->passes($type, $input)) {
+            if ($this->passesRule($type, $input)) {
                 $matches[] = $type;
             }
         }
@@ -73,21 +97,5 @@ class ExtraRules
         }
 
         return array_values(array_unique($candidates, SORT_REGULAR));
-    }
-
-    /**
-     * Checks whether the input passes a given rule type.
-     */
-    private function passes(RuleType $type, mixed $input): bool
-    {
-        /** @var ValidationRule $rule */
-        $rule = new ($type->ruleClass());
-        $failed = false;
-
-        $rule->validate('value', $input, function () use (&$failed): void {
-            $failed = true;
-        });
-
-        return ! $failed;
     }
 }

@@ -106,6 +106,53 @@ php artisan extra-rules:magic "4111111111111111"
 php artisan extra-rules:magic "4111111111111111" --rules=credit_card,imei
 ```
 
+Values that start with `-` are parsed as options, so separate them with `--`:
+
+```bash
+php artisan extra-rules:magic --rules=private_key -- "$(cat id_openssh)"
+```
+
+For secrets, call the API in code instead of passing them as CLI arguments. Arguments are
+visible in shell history and the process list, and a misparsed value can end up in
+`storage/logs/laravel.log`:
+
+```php
+$matches = (new ExtraRules)->magic($privateKey);
+```
+
+### Redact secrets
+
+Detect and redact secrets inside arbitrary text. Returns metadata only, never the
+secret values:
+
+```php
+    use Aindot\ExtraRules\ExtraRules;
+
+    $clean = (new ExtraRules)->redact($text);
+
+    $findings = (new ExtraRules)->detect($text);
+    // [['type' => RuleType::CreditCard, 'offset' => 12, 'length' => 16], ...]
+```
+
+Supported types: `iban`, `api_key`, `bearer_token`, `jwt`, `kuwait_civil_id`,
+`credit_card`, and `private_key`. Detected values are replaced with
+`[REDACTED:<type>]`; overlapping matches keep the longest one (for example
+`Bearer <jwt>` is redacted once as `bearer_token`).
+
+```bash
+php artisan extra-rules:redact --file=log.txt
+cat log.txt | php artisan extra-rules:redact --stdin
+php artisan extra-rules:redact "card 4111111111111111"
+php artisan extra-rules:redact --file=log.txt --types=iban,credit_card
+php artisan extra-rules:redact --file=log.txt --list
+```
+
+`--list` prints counts per type without the redacted text. Prefer `--file` or
+`--stdin` for input that contains secrets.
+
+> Note: 13-digit EAN/ISBN values can pass the Luhn check and are reported as
+> `credit_card`.
+
 ### Generate samples
 
 ```php
