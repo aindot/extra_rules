@@ -34,6 +34,9 @@
             "Aindot\\ExtraRules\\Database\\Factories\\": "database/factories/"
         }
     },
+    "bin": [
+        "bin/extra-rules"
+    ],
     "autoload-dev": {
         "psr-4": {
             "Aindot\\ExtraRules\\Tests\\": "tests/",

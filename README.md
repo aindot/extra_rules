@@ -150,6 +150,17 @@ php artisan extra-rules:redact --file=log.txt --list
 `--list` prints counts per type without the redacted text. Prefer `--file` or
 `--stdin` for input that contains secrets.
 
+For scripts and large log files, use the standalone CLI. It skips Laravel boot
+and is roughly three times faster to start than the Artisan command:
+
+```bash
+./bin/extra-rules redact --file=log.txt
+cat log.txt | ./bin/extra-rules redact --stdin
+```
+
+When this package is installed as a dependency, the same command is available
+as `vendor/bin/extra-rules`.
+
 > Note: 13-digit EAN/ISBN values can pass the Luhn check and are reported as
 > `credit_card`.
 

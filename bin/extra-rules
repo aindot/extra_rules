@@ -1,0 +1,233 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+use Aindot\ExtraRules\ExtraRules;
+
+$autoload = $_composer_autoload_path ?? null;
+
+if (! is_string($autoload) || ! is_file($autoload)) {
+    $autoload = null;
+
+    foreach ([__DIR__.'/../vendor/autoload.php', __DIR__.'/../../../autoload.php'] as $candidate) {
+        if (is_file($candidate)) {
+            $autoload = $candidate;
+
+            break;
+        }
+    }
+}
+
+if (! is_string($autoload) || ! is_file($autoload)) {
+    fwrite(STDERR, "Unable to locate the Composer autoloader.\n");
+    exit(1);
+}
+
+require $autoload;
+
+function usage(bool $toStderr = false): void
+{
+    $message = <<<'TXT'
+Usage:
+  extra-rules redact [input] [--file=path] [--stdin] [--types=iban,credit_card] [--list]
+
+Reads text from exactly one source: a positional argument, --file, or --stdin.
+Use -- before an argument that starts with "-". Values are replaced with
+[REDACTED:<type>]; --list prints counts only.
+TXT;
+
+    fwrite($toStderr ? STDERR : STDOUT, $message."\n");
+}
+
+function fail(string $message): never
+{
+    fwrite(STDERR, $message."\n");
+    exit(1);
+}
+
+/**
+ * @param  list<string>  $args
+ * @return array{input: ?string, file: ?string, stdin: bool, types: ?string, list: bool}
+ */
+function parseArguments(array $args): array
+{
+    $options = [
+        'input' => null,
+        'file' => null,
+        'stdin' => false,
+        'types' => null,
+        'list' => false,
+    ];
+    $count = count($args);
+
+    for ($i = 0; $i < $count; $i++) {
+        $arg = $args[$i];
+
+        if ($arg === '--') {
+            for ($i++; $i < $count; $i++) {
+                if ($options['input'] !== null) {
+                    fail('Too many arguments.');
+                }
+
+                $options['input'] = $args[$i];
+            }
+
+            break;
+        }
+
+        if ($arg === '--stdin') {
+            $options['stdin'] = true;
+
+            continue;
+        }
+
+        if ($arg === '--list') {
+            $options['list'] = true;
+
+            continue;
+        }
+
+        if (str_starts_with($arg, '--file=')) {
+            $options['file'] = substr($arg, 7);
+
+            continue;
+        }
+
+        if (str_starts_with($arg, '--types=')) {
+            $options['types'] = substr($arg, 8);
+
+            continue;
+        }
+
+        if ($arg === '--file' || $arg === '--types') {
+            if ($i + 1 >= $count) {
+                fail("Option [{$arg}] requires a value.");
+            }
+
+            $options[substr($arg, 2)] = $args[++$i];
+
+            continue;
+        }
+
+        if (str_starts_with($arg, '-')) {
+            fail("Unknown option [{$arg}].");
+        }
+
+        if ($options['input'] !== null) {
+            fail('Too many arguments.');
+        }
+
+        $options['input'] = $arg;
+    }
+
+    return $options;
+}
+
+/**
+ * @param  array{input: ?string, file: ?string, stdin: bool, types: ?string, list: bool}  $options
+ */
+function readText(array $options): string
+{
+    $sources = ($options['input'] === null ? 0 : 1)
+        + ($options['file'] === null ? 0 : 1)
+        + ($options['stdin'] ? 1 : 0);
+
+    if ($sources !== 1) {
+        fail('Provide exactly one input source: an argument, --file, or --stdin.');
+    }
+
+    if ($options['stdin']) {
+        $text = stream_get_contents(STDIN);
+
+        return $text === false ? '' : $text;
+    }
+
+    if ($options['file'] !== null) {
+        if (! is_file($options['file']) || ! is_readable($options['file'])) {
+            fail("Unable to read file [{$options['file']}].");
+        }
+
+        $text = file_get_contents($options['file']);
+
+        if ($text === false) {
+            fail("Unable to read file [{$options['file']}].");
+        }
+
+        return $text;
+    }
+
+    return (string) $options['input'];
+}
+
+/**
+ * @return list<string>
+ */
+function parseTypes(?string $types): array
+{
+    if ($types === null || trim($types) === '') {
+        return [];
+    }
+
+    return array_values(array_filter(array_map('trim', explode(',', $types))));
+}
+
+$args = array_slice($argv, 1);
+$command = $args[0] ?? null;
+
+if ($command === null) {
+    usage();
+    exit(1);
+}
+
+if (in_array($command, ['-h', '--help', 'help'], true)) {
+    usage();
+    exit(0);
+}
+
+if ($command !== 'redact') {
+    fwrite(STDERR, "Unknown command [{$command}].\n\n");
+    usage(true);
+    exit(1);
+}
+
+$options = parseArguments(array_slice($args, 1));
+
+try {
+    $extraRules = new ExtraRules;
+    $text = readText($options);
+    $types = parseTypes($options['types']);
+    $matches = $extraRules->detect($text, $types);
+
+    if ($options['list']) {
+        if ($matches === []) {
+            fwrite(STDOUT, "No secrets detected.\n");
+        } else {
+            fwrite(STDOUT, 'Detected '.count($matches)." secret(s):\n");
+
+            $counts = [];
+
+            foreach ($matches as $match) {
+                $key = $match['type']->value;
+                $counts[$key] = ($counts[$key] ?? 0) + 1;
+            }
+
+            foreach ($counts as $key => $count) {
+                fwrite(STDOUT, "{$key}: {$count}\n");
+            }
+        }
+
+        exit(0);
+    }
+
+    $output = $extraRules->redact($text, $types);
+    fwrite(STDOUT, $output);
+
+    if (! str_ends_with($output, "\n")) {
+        fwrite(STDOUT, "\n");
+    }
+} catch (InvalidArgumentException $exception) {
+    fail($exception->getMessage());
+}
+
+exit(0);

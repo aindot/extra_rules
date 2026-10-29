@@ -100,6 +100,15 @@ php artisan extra-rules:redact --file=log.txt --list
 
 Prefer `--file`/`--stdin` for secret-bearing input. A 13-digit EAN/ISBN can pass Luhn and be reported as `credit_card`.
 
+For scripts and large files, use the standalone CLI, which skips Laravel boot (about 3x faster startup than Artisan):
+
+```bash
+./bin/extra-rules redact --file=log.txt
+cat log.txt | ./bin/extra-rules redact --stdin
+```
+
+Installed as a dependency, it is available as `vendor/bin/extra-rules`.
+
 ## Generate valid samples
 
 ```php
