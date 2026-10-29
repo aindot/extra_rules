@@ -15,6 +15,8 @@ class Generator
         $type = RuleType::fromMixed($rule);
 
         $value = match ($type) {
+            RuleType::ApiKey => $this->apiKey(),
+            RuleType::BearerToken => $this->bearerToken(),
             RuleType::Bic => $this->bic(),
             RuleType::Cnpj => $this->cnpj(),
             RuleType::Cpf => $this->cpf(),
@@ -50,6 +52,7 @@ class Generator
             RuleType::Meid => $this->meid(),
             RuleType::Nbn => 'urn:nbn:de:bvb:19-'.$this->digits(6),
             RuleType::PassportMrz => $this->passportMrz(),
+            RuleType::PrivateKey => $this->privateKey(),
             RuleType::Slug => $this->slugPart(5).'-'.$this->slugPart(5),
             RuleType::Sscc => $this->gtin(18),
             RuleType::Ssn => $this->ssn(),
@@ -259,6 +262,33 @@ class Generator
     private function bic(): string
     {
         return 'DEUTDEFF';
+    }
+
+    private function apiKey(): string
+    {
+        $samples = [
+            'sk_test_'.$this->alnum(24),
+            'AKIA'.$this->alnum(16),
+            'ghp_'.$this->alnum(36),
+            'glpat-'.$this->slugPart(24),
+            'xoxb-'.$this->digits(12).'-'.$this->alnum(24),
+            'AIza'.$this->alnum(35),
+            'hf_'.$this->alnum(34),
+        ];
+
+        return $samples[random_int(0, count($samples) - 1)];
+    }
+
+    private function bearerToken(): string
+    {
+        return 'Bearer '.rtrim(strtr(base64_encode(random_bytes(24)), '+/', '-_'), '=');
+    }
+
+    private function privateKey(): string
+    {
+        $body = chunk_split(base64_encode(random_bytes(64)), 64, PHP_EOL);
+
+        return '-----BEGIN PRIVATE KEY-----'.PHP_EOL.$body.'-----END PRIVATE KEY-----';
     }
 
     private function iban(): string
@@ -481,8 +511,8 @@ class Generator
     private function uuid(): string
     {
         $data = random_bytes(16);
-        $data[6] = chr((ord($data[6]) & 0x0f) | 0x40);
-        $data[8] = chr((ord($data[8]) & 0x3f) | 0x80);
+        $data[6] = chr((ord($data[6]) & 0x0F) | 0x40);
+        $data[8] = chr((ord($data[8]) & 0x3F) | 0x80);
         $hex = bin2hex($data);
 
         return substr($hex, 0, 8).'-'.substr($hex, 8, 4).'-'.substr($hex, 12, 4).'-'.substr($hex, 16, 4).'-'.substr($hex, 20, 12);

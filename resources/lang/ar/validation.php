@@ -3,6 +3,8 @@
 return [
     'invalid' => 'قيمة :attribute غير صالحة.',
 
+    'api_key' => 'يجب أن يكون :attribute مفتاح API صالحًا.',
+    'bearer_token' => 'يجب أن يكون :attribute رمز bearer صالحًا.',
     'bic' => 'يجب أن يكون :attribute رمز BIC/SWIFT صالحًا.',
     'cnpj' => 'يجب أن يكون :attribute رقم CNPJ صالحًا.',
     'cpf' => 'يجب أن يكون :attribute رقم CPF صالحًا.',
@@ -42,6 +44,7 @@ return [
     'meid' => 'يجب أن يكون :attribute رقم MEID صالحًا.',
     'nbn' => 'يجب أن يكون :attribute رقم NBN صالحًا.',
     'passport_mrz' => 'يجب أن يكون :attribute سطر MRZ لجواز السفر صالحًا.',
+    'private_key' => 'يجب أن يكون :attribute كتلة مفتاح خاص صالحة.',
     'slug' => 'يجب أن يكون :attribute رابطًا نصيًا (slug) صالحًا.',
     'sscc' => 'يجب أن يكون :attribute رقم SSCC صالحًا.',
     'ssn' => 'يجب أن يكون :attribute رقم SSN صالحًا.',

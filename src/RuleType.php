@@ -2,6 +2,8 @@
 
 namespace Aindot\ExtraRules;
 
+use Aindot\ExtraRules\Rules\ApiKey;
+use Aindot\ExtraRules\Rules\BearerToken;
 use Aindot\ExtraRules\Rules\Bic;
 use Aindot\ExtraRules\Rules\Cnpj;
 use Aindot\ExtraRules\Rules\Cpf;
@@ -41,6 +43,7 @@ use Aindot\ExtraRules\Rules\MacAddress;
 use Aindot\ExtraRules\Rules\Meid;
 use Aindot\ExtraRules\Rules\Nbn;
 use Aindot\ExtraRules\Rules\PassportMrz;
+use Aindot\ExtraRules\Rules\PrivateKey;
 use Aindot\ExtraRules\Rules\Slug;
 use Aindot\ExtraRules\Rules\Sscc;
 use Aindot\ExtraRules\Rules\Ssn;
@@ -54,6 +57,8 @@ use InvalidArgumentException;
 
 enum RuleType: string
 {
+    case ApiKey = 'api_key';
+    case BearerToken = 'bearer_token';
     case Bic = 'bic';
     case Cnpj = 'cnpj';
     case Cpf = 'cpf';
@@ -93,6 +98,7 @@ enum RuleType: string
     case Meid = 'meid';
     case Nbn = 'nbn';
     case PassportMrz = 'passport_mrz';
+    case PrivateKey = 'private_key';
     case Slug = 'slug';
     case Sscc = 'sscc';
     case Ssn = 'ssn';
@@ -109,6 +115,8 @@ enum RuleType: string
     public function ruleClass(): string
     {
         return match ($this) {
+            self::ApiKey => ApiKey::class,
+            self::BearerToken => BearerToken::class,
             self::Bic => Bic::class,
             self::Cnpj => Cnpj::class,
             self::Cpf => Cpf::class,
@@ -148,6 +156,7 @@ enum RuleType: string
             self::Meid => Meid::class,
             self::Nbn => Nbn::class,
             self::PassportMrz => PassportMrz::class,
+            self::PrivateKey => PrivateKey::class,
             self::Slug => Slug::class,
             self::Sscc => Sscc::class,
             self::Ssn => Ssn::class,
@@ -193,6 +202,11 @@ enum RuleType: string
             'egypt_nid' => self::EgyptianNid,
             'egyptian_id' => self::EgyptianNid,
             'email' => self::Email,
+            'privatekey' => self::PrivateKey,
+            'secret_key' => self::PrivateKey,
+            'apikey' => self::ApiKey,
+            'bearer' => self::BearerToken,
+            'access_token' => self::BearerToken,
         ];
 
         if (isset($aliases[$normalized])) {

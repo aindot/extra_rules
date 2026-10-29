@@ -3,6 +3,8 @@
 return [
     'invalid' => 'The :attribute is invalid.',
 
+    'api_key' => 'The :attribute must be a valid API key.',
+    'bearer_token' => 'The :attribute must be a valid bearer token.',
     'bic' => 'The :attribute must be a valid BIC/SWIFT code.',
     'cnpj' => 'The :attribute must be a valid CNPJ number.',
     'cpf' => 'The :attribute must be a valid CPF number.',
@@ -42,6 +44,7 @@ return [
     'meid' => 'The :attribute must be a valid MEID.',
     'nbn' => 'The :attribute must be a valid NBN.',
     'passport_mrz' => 'The :attribute must be a valid passport MRZ line.',
+    'private_key' => 'The :attribute must be a valid private key block.',
     'slug' => 'The :attribute must be a valid slug.',
     'sscc' => 'The :attribute must be a valid SSCC.',
     'ssn' => 'The :attribute must be a valid SSN.',

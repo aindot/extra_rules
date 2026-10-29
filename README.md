@@ -50,6 +50,9 @@ The following are the validation rules that are in development or have been deve
 - [x] UPC-E - Compressed UPC barcode for small retail packages.
 - [x] GTIN8 - 8-digit global trade item number for small products.
 - [x] ITF-14 - 14-digit carton barcode using GTIN-14 structure.
+- [x] Private key - PEM private key blocks (RSA, EC, OpenSSH, PGP, and more).
+- [x] API key - Known service API key prefixes (AWS, Stripe, GitHub, and more).
+- [x] Bearer token - HTTP Bearer authorization token format.
 
 ## Installation
 
