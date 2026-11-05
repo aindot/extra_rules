@@ -187,6 +187,10 @@ php artisan extra-rules:generate email
 php artisan extra-rules:generate email --count=5
 ```
 
+## Issues
+
+- Google Shopping product ID's may be detected as credit cards while using the REDACTED function.
+
 ## Credits
 
 - [Abdullah](https://github.com/aindot)
